@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>Sửa câu hỏi</title>
+
+<link rel="stylesheet"
+href="/css/admin.css">
+
+</head>
+
+<body>
+
+<div class="form-card">
+
+<h1>
+✏️ Sửa câu hỏi
+</h1>
+
+<form method="POST">
+
+<textarea
+name="question"
+required
+><%= question.question %></textarea>
+
+<input
+type="number"
+name="order_no"
+value="<%= question.order_no %>"
+required
+>
+
+<button>
+Cập nhật
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

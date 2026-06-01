@@ -1,46 +1,62 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Đăng nhập</title>
-<link rel="stylesheet" href="/css/auth.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Gửi lời yêu thương</title>
 
+    <link rel="stylesheet" href="/css/auth.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
 <body>
 
 <div class="auth-container">
 
     <div class="auth-card">
 
-        <h1>💕 Gửi lời yêu thương</h1>
+        <div class="logo">
+            💕
+        </div>
 
-        <p>Đăng nhập để tiếp tục</p>
+        <h1>Đăng nhập</h1>
+
+        <p class="subtitle">
+            Chào mừng quay trở lại
+        </p>
 
         <form action="/login" method="POST">
 
-            <input
-                type="text"
-                name="username"
-                placeholder="Tên đăng nhập"
-                required
-            >
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Tên đăng nhập"
+                    required
+                >
+            </div>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Mật khẩu"
-                required
-            >
+            <div class="input-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Mật khẩu"
+                    required
+                >
+            </div>
 
-            <button type="submit">
+            <button type="submit" class="btn-auth">
                 Đăng nhập
             </button>
 
         </form>
 
-        <a href="/register">
+        <div class="bottom-text">
             Chưa có tài khoản?
-        </a>
+            <a href="/register">
+                Đăng ký ngay
+            </a>
+        </div>
 
     </div>
 

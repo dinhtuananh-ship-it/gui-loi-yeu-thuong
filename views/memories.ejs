@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Kỷ niệm</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <div class="logo">
+            ❤️ Gửi lời yêu thương
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="/">
+                    <i class="fa-solid fa-house"></i>
+                    Trang chủ
+                </a>
+            </li>
+
+            <li>
+                <a href="/history">
+                    <i class="fa-solid fa-book-open"></i>
+                    Nhật ký
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="/memories">
+                    <i class="fa-solid fa-heart"></i>
+                    Kỷ niệm
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <div class="topbar">
+
+            <div class="user-box">
+
+                Xin chào,
+
+                <strong>
+                    <%= user.username %>
+                </strong>
+
+            </div>
+
+            <a href="/logout" class="logout">
+                Đăng xuất
+            </a>
+
+        </div>
+
+        <div class="hero">
+
+            <h1>
+                ❤️ Kỷ niệm của chúng ta
+            </h1>
+
+            <p>
+                Lưu giữ những khoảnh khắc đáng nhớ
+            </p>
+
+        </div>
+
+        <div style="margin-bottom:20px;">
+
+            <a
+                href="/memories/add"
+                class="memory-btn"
+            >
+                ➕ Thêm kỷ niệm
+            </a>
+
+        </div>
+
+        <% memories.forEach(memory => { %>
+
+            <div class="memory-card">
+
+                <h2>
+                    <%= memory.title %>
+                </h2>
+
+                <button
+    class="view-btn"
+    onclick="openMemory(
+        `<%= memory.title %>`,
+        `<%= memory.username %>`,
+        `<%= memory.content %>`
+    )"
+>
+    Xem chi tiết
+</button>
+
+                <div class="memory-info">
+
+                    👤 <%= memory.username %>
+
+                    •
+
+                    📅
+                    <%= new Date(memory.created_at).toLocaleDateString("vi-VN") %>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+<div id="memoryModal" class="modal">
+
+    <div class="modal-content">
+
+        <span
+            class="close"
+            onclick="closeMemory()"
+        >
+            &times;
+        </span>
+
+        <h2 id="modalTitle"></h2>
+
+        <p id="modalUser"></p>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+function openMemory(
+    title,
+    user,
+    content
+){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText = title;
+
+    document.getElementById(
+        "modalUser"
+    ).innerText =
+        "👤 " + user;
+
+    document.getElementById(
+        "modalContent"
+    ).innerText = content;
+
+    document.getElementById(
+        "memoryModal"
+    ).style.display = "flex";
+}
+
+function closeMemory(){
+
+    document.getElementById(
+        "memoryModal"
+    ).style.display = "none";
+}
+
+</script>
+</body>
+</html>

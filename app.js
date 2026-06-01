@@ -17,15 +17,25 @@ app.use(
     })
 );
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(
+    express.static(
+        path.join(__dirname, "public")
+    )
+);
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set(
+    "views",
+    path.join(__dirname, "views")
+);
 
 app.use("/", require("./routes/auth"));
 app.use("/admin", require("./routes/admin"));
 app.use("/", require("./routes/question"));
+app.use("/", require("./routes/memory"));
 
 app.listen(3000, () => {
-    console.log("Server running at http://localhost:3000");
+    console.log(
+        "Server running at http://localhost:3000"
+    );
 });

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Nhật ký yêu thương</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <div class="logo">
+            ❤️ Gửi lời yêu thương
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="/" class="menu-link">
+                    <i class="fa-solid fa-house"></i>
+                    Trang chủ
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="/history" class="menu-link">
+                    <i class="fa-solid fa-book-open"></i>
+                    Nhật ký
+                </a>
+            </li>
+
+            <li>
+                <a href="/memories" class="menu-link">
+                    <i class="fa-solid fa-heart"></i>
+                    Kỷ niệm
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <div class="topbar">
+
+            <div class="user-box">
+
+                Xin chào,
+
+                <strong>
+                    <%= user.username %>
+                </strong>
+
+            </div>
+
+            <a href="/logout" class="logout">
+                Đăng xuất
+            </a>
+
+        </div>
+
+        <div class="hero">
+
+            <h1>
+                📖 Nhật ký yêu thương
+            </h1>
+
+            <p>
+                Những câu trả lời đã cùng nhau lưu giữ
+            </p>
+
+        </div>
+
+        <% if(answers.length === 0){ %>
+
+            <div class="history-card">
+
+                <h2>
+                    Chưa có câu trả lời nào
+                </h2>
+
+            </div>
+
+        <% } %>
+
+        <% 
+        const grouped = {};
+
+        answers.forEach(item => {
+
+            if(!grouped[item.question]){
+                grouped[item.question] = [];
+            }
+
+            grouped[item.question].push(item);
+
+        });
+        %>
+
+        <% for(let question in grouped){ %>
+
+            <div class="history-card">
+
+                <h2>
+                    💕 <%= question %>
+                </h2>
+
+                <% grouped[question].forEach(ans => { %>
+
+                    <div class="answer-box">
+
+                        <strong>
+                            👤 <%= ans.username %>
+                        </strong>
+
+                        <p>
+                            <%= ans.answer %>
+                        </p>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+</body>
+</html>

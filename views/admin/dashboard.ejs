@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Admin</title>
+
+<link rel="stylesheet" href="/css/admin.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+
+        <h1>
+            💕 Dashboard Admin
+        </h1>
+
+        <div>
+
+            <a href="/" class="home-btn">
+                🏠 Trang chủ
+            </a>
+
+            <a href="/admin/add" class="add-btn">
+                ➕ Thêm câu hỏi
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>STT</th>
+                    <th>Câu hỏi</th>
+                    <th>Thao tác</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <% questions.forEach(q=>{ %>
+
+                <tr>
+
+                    <td>
+                        <%= q.id %>
+                    </td>
+
+                    <td>
+                        <%= q.order_no %>
+                    </td>
+
+                    <td>
+                        <%= q.question %>
+                    </td>
+
+                    <td>
+
+                        <a
+                        href="/admin/edit/<%= q.id %>"
+                        class="edit-btn"
+                        >
+                            Sửa
+                        </a>
+
+                        <a
+                        href="/admin/delete/<%= q.id %>"
+                        class="delete-btn"
+                        >
+                            Xóa
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <% }) %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

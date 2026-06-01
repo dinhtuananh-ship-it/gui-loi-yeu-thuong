@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>Thêm câu hỏi</title>
+
+<link rel="stylesheet"
+href="/css/admin.css">
+
+</head>
+
+<body>
+
+<div class="form-card">
+
+<h1>
+💕 Thêm câu hỏi mới
+</h1>
+
+<form
+action="/admin/add"
+method="POST"
+>
+
+<textarea
+name="question"
+required
+></textarea>
+
+<input
+type="number"
+name="order_no"
+required
+placeholder="Thứ tự hiển thị"
+>
+
+<button>
+Lưu câu hỏi
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

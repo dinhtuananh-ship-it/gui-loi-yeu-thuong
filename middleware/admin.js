@@ -1,17 +1,13 @@
-function isAdmin(
-    req,
-    res,
-    next
-){
+function isAdmin(req, res, next) {
 
-    if(
+    if (
         req.session.user &&
         req.session.user.role === "admin"
-    ){
+    ) {
         return next();
     }
 
-    res.redirect("/");
+    res.redirect("/login");
 }
 
 module.exports = isAdmin;

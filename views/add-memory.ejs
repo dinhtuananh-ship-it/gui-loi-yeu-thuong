@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thêm kỷ niệm</title>
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="memory-form">
+
+    <h1>
+        ❤️ Thêm kỷ niệm
+    </h1>
+
+    <form
+        action="/memories/add"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Tiêu đề"
+            required
+        >
+
+        <textarea
+            name="content"
+            placeholder="Nội dung kỷ niệm..."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Lưu kỷ niệm
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
