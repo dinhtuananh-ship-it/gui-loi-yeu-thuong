@@ -1,9 +1,203 @@
-body{
-    font-family: Arial;
-    text-align:center;
-    margin-top:50px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-h1{
-    color:#ff4081;
+body{
+    background:#fff4f8;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:260px;
+    background:white;
+    box-shadow:0 0 15px rgba(0,0,0,.05);
+    padding:30px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#ff4d88;
+    margin-bottom:40px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.sidebar li i{
+    margin-right:10px;
+}
+
+.sidebar li:hover{
+    background:#ffe1ec;
+}
+
+.active{
+    background:#ffe1ec;
+    color:#ff4d88;
+}
+
+/* Main */
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+/* Topbar */
+
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+    gap:20px;
+    align-items:center;
+}
+
+.user-box{
+    background:white;
+    padding:10px 20px;
+    border-radius:12px;
+}
+
+.logout{
+    background:#ff4d88;
+    color:white;
+    text-decoration:none;
+    padding:10px 20px;
+    border-radius:12px;
+}
+
+/* Hero */
+
+.hero{
+    text-align:center;
+    margin-top:30px;
+}
+
+.hero h1{
+    font-size:55px;
+    color:#ff4d88;
+}
+
+.hero p{
+    color:#777;
+    margin-top:10px;
+}
+
+/* Question */
+
+.question-card{
+    background:white;
+    width:80%;
+    margin:40px auto;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(255,77,136,.15);
+}
+
+.badge{
+    background:#ffe1ec;
+    color:#ff4d88;
+    padding:10px 20px;
+    border-radius:30px;
+    display:inline-block;
+}
+
+.question-card h2{
+    margin-top:20px;
+    margin-bottom:25px;
+}
+
+.question-card textarea{
+    width:100%;
+    height:160px;
+    border:2px solid #ffd1e1;
+    border-radius:15px;
+    padding:15px;
+    resize:none;
+    outline:none;
+}
+
+.question-card button{
+    margin-top:20px;
+    width:250px;
+    height:50px;
+    border:none;
+    border-radius:15px;
+    background:#ff4d88;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* Status */
+
+.status{
+    width:80%;
+    margin:auto;
+    display:flex;
+    gap:20px;
+}
+
+.status-item{
+    flex:1;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.success{
+    border-left:5px solid #2ecc71;
+}
+
+.waiting{
+    border-left:5px solid orange;
+}
+
+/* Info */
+
+.info{
+    width:80%;
+    margin:30px auto;
+    display:flex;
+    gap:20px;
+}
+
+.info-card{
+    flex:2;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+}
+
+.days-card{
+    flex:1;
+    background:#ffe1ec;
+    border-radius:20px;
+    text-align:center;
+    padding:25px;
+}
+
+.days{
+    font-size:60px;
+    font-weight:bold;
+    color:#ff4d88;
 }

@@ -1,23 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Đăng ký</title>
+<meta charset="UTF-8">
+<title>Đăng ký</title>
+<link rel="stylesheet" href="/css/auth.css">
 </head>
+
 <body>
 
-<h1>Đăng ký</h1>
+<div class="auth-container">
 
-<form>
-    <input type="text" placeholder="Tên đăng nhập">
+    <div class="auth-card">
 
-    <br><br>
+        <h1>💕 Tạo tài khoản</h1>
 
-    <input type="password" placeholder="Mật khẩu">
+        <p>Tham gia phòng tình yêu của bạn</p>
 
-    <br><br>
+        <form action="/register" method="POST">
 
-    <button>Đăng ký</button>
-</form>
+            <input
+                type="text"
+                name="username"
+                placeholder="Tên đăng nhập"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Mật khẩu"
+                required
+            >
+
+            <input
+                type="text"
+                name="room_code"
+                placeholder="Mã phòng (VD: LOVE2026)"
+                required
+            >
+
+            <button type="submit">
+                Đăng ký
+            </button>
+
+        </form>
+
+        <a href="/login">
+            Đã có tài khoản?
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>

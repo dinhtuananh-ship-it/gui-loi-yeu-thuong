@@ -1,13 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
+    <meta charset="UTF-8">
     <title>Gửi lời yêu thương</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-<h1>❤️ Gửi lời yêu thương ❤️</h1>
+<div class="container">
 
-<p>Trang chủ</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <div class="logo">
+            ❤️ Gửi lời yêu thương
+        </div>
+
+        <ul>
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </li>
+
+            <li>
+                <i class="fa-solid fa-circle-question"></i>
+                Câu hỏi
+            </li>
+
+            <li>
+                <i class="fa-solid fa-book-open"></i>
+                Lịch sử
+            </li>
+
+            <li>
+                <i class="fa-solid fa-users"></i>
+                Thông tin phòng
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <div class="topbar">
+
+            <div class="music">
+                🎵 Nhạc nền
+            </div>
+
+            <div class="user-box">
+                Xin chào, User
+            </div>
+
+            <a href="/logout" class="logout">
+                Đăng xuất
+            </a>
+
+        </div>
+
+        <div class="hero">
+
+            <h1>
+                💕 Gửi lời yêu thương 💕
+            </h1>
+
+            <p>
+                Cùng nhau trả lời những câu hỏi để hiểu nhau hơn mỗi ngày
+            </p>
+
+        </div>
+
+        <div class="question-card">
+
+            <span class="badge">
+                CÂU HỎI HIỆN TẠI
+            </span>
+
+            <h2>
+                Bạn nhớ lần đầu chúng ta gặp nhau ở đâu?
+            </h2>
+
+            <textarea
+                placeholder="Nhập câu trả lời của bạn..."
+            ></textarea>
+
+            <button>
+                Gửi câu trả lời
+            </button>
+
+        </div>
+
+        <div class="status">
+
+            <div class="status-item success">
+                ✅ Bạn đã trả lời
+            </div>
+
+            <div class="status-item waiting">
+                ⏳ Đang chờ người ấy trả lời...
+            </div>
+
+        </div>
+
+        <div class="info">
+
+            <div class="info-card">
+
+                <h3>Thông tin của bạn</h3>
+
+                <p>
+                    Tên đăng nhập:
+                    <strong>user1</strong>
+                </p>
+
+                <p>
+                    Phòng:
+                    <strong>LOVE2026</strong>
+                </p>
+
+            </div>
+
+            <div class="days-card">
+
+                <div class="days">
+                    365
+                </div>
+
+                <p>Ngày bên nhau ❤️</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
