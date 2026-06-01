@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tạo phòng</title>
+
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="form-card">
+
+    <h1>
+        ❤️ Tạo phòng mới
+    </h1>
+
+    <form
+        action="/admin/rooms/add"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="room_name"
+            placeholder="Ví dụ: Minh ❤️ Lan"
+            required
+        >
+
+        <input
+            type="text"
+            name="room_code"
+            placeholder="Ví dụ: LOVE002"
+            required
+        >
+
+        <button type="submit">
+            Tạo phòng
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

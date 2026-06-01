@@ -1,28 +1,98 @@
-<form action="/register" method="POST">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <input
-        type="text"
-        name="username"
-        placeholder="Tên đăng nhập"
-        required
-    >
+<title>Đăng ký - Gửi lời yêu thương</title>
 
-    <input
-        type="password"
-        name="password"
-        placeholder="Mật khẩu"
-        required
-    >
+<link rel="stylesheet" href="/css/auth.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <div class="logo">
+            💕
+        </div>
+
+        <h1>Đăng ký</h1>
+
+        <p class="subtitle">
+            Tạo tài khoản để bắt đầu hành trình yêu thương
+        </p>
+
+        <form action="/register" method="POST">
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Tên đăng nhập"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Mật khẩu"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="room_code"
+                    placeholder="Mã phòng (VD: LOVE001)"
+                    required
+                >
+
+            </div>
+<div class="input-group">
 
     <input
         type="text"
         name="room_code"
-        placeholder="Mã phòng (VD: LOVE001)"
+        placeholder="Mã phòng được admin cấp"
         required
     >
 
-    <button type="submit">
-        Đăng ký
-    </button>
+</div>
+            <button
+                type="submit"
+                class="btn-auth"
+            >
+                Đăng ký
+            </button>
 
-</form>
+        </form>
+
+        <div class="bottom-text">
+
+            Đã có tài khoản?
+
+            <a href="/login">
+                Đăng nhập ngay
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

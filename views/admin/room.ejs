@@ -2,10 +2,9 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard Admin</title>
+<title>Quản lý phòng</title>
 
 <link rel="stylesheet" href="/css/admin.css">
-
 </head>
 <body>
 
@@ -14,22 +13,24 @@
     <div class="topbar">
 
         <h1>
-            💕 Dashboard Admin
+            ❤️ Quản lý phòng
         </h1>
 
         <div>
 
-            <a href="/" class="home-btn">
-                🏠 Trang chủ
+            <a
+                href="/admin"
+                class="home-btn"
+            >
+                Dashboard
             </a>
 
-            <a href="/admin/add" class="add-btn">
-    ➕ Thêm câu hỏi
-</a>
-
-<a href="/admin/rooms" class="home-btn">
-    🏠 Quản lý phòng
-</a>
+            <a
+                href="/admin/rooms/add"
+                class="add-btn"
+            >
+                ➕ Tạo phòng
+            </a>
 
         </div>
 
@@ -42,43 +43,43 @@
             <thead>
 
                 <tr>
+
                     <th>ID</th>
-                    <th>STT</th>
-                    <th>Câu hỏi</th>
+                    <th>Mã phòng</th>
+                    <th>Tên phòng</th>
+                    <th>Thành viên</th>
                     <th>Thao tác</th>
+
                 </tr>
 
             </thead>
 
             <tbody>
 
-                <% questions.forEach(q=>{ %>
+                <% rooms.forEach(room=>{ %>
 
                 <tr>
 
                     <td>
-                        <%= q.id %>
+                        <%= room.id %>
                     </td>
 
                     <td>
-                        <%= q.order_no %>
+                        <%= room.room_code %>
                     </td>
 
                     <td>
-                        <%= q.question %>
+                        <%= room.room_name %>
+                    </td>
+
+                    <td>
+                        <%= room.total_users %>
                     </td>
 
                     <td>
 
                         <a
-                        href="/admin/edit/<%= q.id %>"
-                        class="edit-btn"
-                        >
-                            Sửa
-                        </a>
-
-                        <a
-                        href="/admin/delete/<%= q.id %>"
+                        href="/admin/rooms/delete/<%= room.id %>"
                         class="delete-btn"
                         >
                             Xóa

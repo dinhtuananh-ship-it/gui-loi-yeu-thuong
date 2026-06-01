@@ -108,4 +108,106 @@ router.get("/delete/:id", isAdmin, (req, res) => {
     );
 });
 
+/* =====================
+   ROOMS
+===================== */
+
+router.get("/rooms", isAdmin, (req, res) => {
+
+    db.query(
+        `
+        SELECT
+            r.*,
+            COUNT(u.id) AS total_users
+        FROM rooms r
+        LEFT JOIN users u
+            ON u.room_id = r.id
+        GROUP BY r.id
+        ORDER BY r.id DESC
+        `,
+        (err, rooms) => {
+
+            if (err) {
+                return res.send(err);
+            }
+
+            res.render(
+                "admin/rooms",
+                {
+                    rooms,
+                    user: req.session.user
+                }
+            );
+        }
+    );
+});
+
+router.get("/rooms/add", isAdmin, (req, res) => {
+
+    res.render(
+        "admin/add-room"
+    );
+
+});
+
+router.post("/rooms/add", isAdmin, (req, res) => {
+
+    const {
+        room_name,
+        room_code
+    } = req.body;
+
+    db.query(
+        `
+        INSERT INTO rooms
+        (
+            room_name,
+            room_code
+        )
+        VALUES
+        (
+            ?,
+            ?
+        )
+        `,
+        [
+            room_name,
+            room_code
+        ],
+        (err) => {
+
+            if (err) {
+                return res.send(err);
+            }
+
+            res.redirect("/admin/rooms");
+        }
+    );
+});
+
+router.get(
+    "/rooms/delete/:id",
+    isAdmin,
+    (req, res) => {
+
+        db.query(
+            `
+            DELETE FROM rooms
+            WHERE id=?
+            `,
+            [req.params.id],
+            (err) => {
+
+                if (err) {
+                    return res.send(err);
+                }
+
+                res.redirect(
+                    "/admin/rooms"
+                );
+            }
+        );
+    }
+);
+
 module.exports = router;
