@@ -1,15 +1,22 @@
 const express = require("express");
 const router = express.Router();
+
 const db = require("../config/db");
 
-// Lấy câu hỏi hiện tại
+/*
+==================
+HOME
+==================
+*/
+
 router.get("/", (req, res) => {
 
     if (!req.session.user) {
         return res.redirect("/login");
     }
 
-    const roomId = req.session.user.room_id;
+    const roomId =
+        req.session.user.room_id;
 
     db.query(
         "SELECT * FROM questions ORDER BY order_no ASC",
@@ -19,21 +26,16 @@ router.get("/", (req, res) => {
                 return res.send(err);
             }
 
-            if (questions.length === 0) {
-                return res.render("home", {
-                    question: null,
-                    waiting: false,
-                    completed: true,
-                    user: req.session.user
-                });
-            }
-
             let currentQuestion = null;
             let waiting = false;
 
             for (let q of questions) {
 
-                const answers = await getAnswers(q.id);
+                const answers =
+                    await getAnswers(
+                        q.id,
+                        roomId
+                    );
 
                 if (answers.length < 2) {
 
@@ -41,7 +43,9 @@ router.get("/", (req, res) => {
 
                     const myAnswer =
                         answers.find(
-                            a => a.user_id === req.session.user.id
+                            a =>
+                            a.user_id ===
+                            req.session.user.id
                         );
 
                     if (myAnswer) {
@@ -52,57 +56,60 @@ router.get("/", (req, res) => {
                 }
             }
 
-            if (!currentQuestion) {
-                return res.render("home", {
-                    question: null,
-                    waiting: false,
-                    completed: true,
+            res.render(
+                "home",
+                {
+                    question: currentQuestion,
+                    waiting,
                     user: req.session.user
-                });
-            }
-
-            res.render("home", {
-                question: currentQuestion,
-                waiting,
-                completed: false,
-                user: req.session.user
-
-            });
-
+                }
+            );
         }
     );
 });
 
-function getAnswers(questionId) {
+function getAnswers(
+    questionId,
+    roomId
+){
 
-    return new Promise((resolve, reject) => {
+    return new Promise(
+        (resolve,reject)=>{
 
-        db.query(
-            `
-            SELECT *
-            FROM answers
-            WHERE question_id=?
-            `,
-            [questionId],
-            (err, result) => {
+            db.query(
+                `
+                SELECT *
+                FROM answers
+                WHERE question_id=?
+                AND room_id=?
+                `,
+                [
+                    questionId,
+                    roomId
+                ],
+                (err,result)=>{
 
-                if (err) {
-                    reject(err);
+                    if(err){
+                        reject(err);
+                    }
+
+                    resolve(result);
+
                 }
+            );
 
-                resolve(result);
-            }
-        );
-    });
+        }
+    );
+
 }
 
-// Lưu câu trả lời
+/*
+==================
+ANSWER
+==================
+*/
 
 router.post("/answer", (req, res) => {
-
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
 
     const {
         question_id,
@@ -122,10 +129,6 @@ router.post("/answer", (req, res) => {
         ],
         (err, exist) => {
 
-            if (err) {
-                return res.send(err);
-            }
-
             if (exist.length > 0) {
                 return res.redirect("/");
             }
@@ -136,32 +139,40 @@ router.post("/answer", (req, res) => {
                 (
                     question_id,
                     user_id,
+                    room_id,
                     answer
                 )
-                VALUES (?,?,?)
+                VALUES
+                (
+                    ?,
+                    ?,
+                    ?,
+                    ?
+                )
                 `,
                 [
                     question_id,
                     req.session.user.id,
+                    req.session.user.room_id,
                     answer
                 ],
-                (err2) => {
-
-                    if (err2) {
-                        return res.send(err2);
-                    }
+                () => {
 
                     res.redirect("/");
+
                 }
             );
         }
     );
 });
-router.get("/history", (req, res) => {
 
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
+/*
+==================
+HISTORY
+==================
+*/
+
+router.get("/history", (req, res) => {
 
     db.query(
         `
@@ -171,25 +182,30 @@ router.get("/history", (req, res) => {
         u.username
         FROM answers a
         JOIN questions q
-            ON q.id = a.question_id
+            ON q.id=a.question_id
         JOIN users u
-            ON u.id = a.user_id
+            ON u.id=a.user_id
+        WHERE a.room_id=?
         ORDER BY q.order_no
         `,
-        (err, result) => {
+        [
+            req.session.user.room_id
+        ],
+        (err, answers) => {
 
             if (err) {
                 return res.send(err);
             }
 
             res.render(
-    "history",
-    {
-        answers: result,
-        user: req.session.user
-    }
-);
+                "history",
+                {
+                    answers,
+                    user:req.session.user
+                }
+            );
         }
     );
 });
+
 module.exports = router;

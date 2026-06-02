@@ -3,11 +3,13 @@ const router = express.Router();
 
 const db = require("../config/db");
 
-router.get("/memories", (req, res) => {
+/*
+==================
+MEMORIES
+==================
+*/
 
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
+router.get("/memories", (req, res) => {
 
     db.query(
         `
@@ -16,9 +18,13 @@ router.get("/memories", (req, res) => {
         users.username
         FROM memories
         JOIN users
-        ON users.id = memories.user_id
+        ON users.id=memories.user_id
+        WHERE memories.room_id=?
         ORDER BY memories.created_at DESC
         `,
+        [
+            req.session.user.room_id
+        ],
         (err, memories) => {
 
             if (err) {
@@ -29,27 +35,28 @@ router.get("/memories", (req, res) => {
                 "memories",
                 {
                     memories,
-                    user: req.session.user
+                    user:req.session.user
                 }
             );
         }
     );
 });
 
+/*
+==================
+ADD MEMORY
+==================
+*/
+
 router.get("/memories/add", (req, res) => {
 
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
+    res.render(
+        "add-memory"
+    );
 
-    res.render("add-memory");
 });
 
 router.post("/memories/add", (req, res) => {
-
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
 
     const {
         title,
@@ -61,6 +68,7 @@ router.post("/memories/add", (req, res) => {
         INSERT INTO memories
         (
             user_id,
+            room_id,
             title,
             content
         )
@@ -68,11 +76,13 @@ router.post("/memories/add", (req, res) => {
         (
             ?,
             ?,
+            ?,
             ?
         )
         `,
         [
             req.session.user.id,
+            req.session.user.room_id,
             title,
             content
         ],

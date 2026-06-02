@@ -4,6 +4,12 @@ const router = express.Router();
 const db = require("../config/db");
 const isAdmin = require("../middleware/admin");
 
+/*
+========================
+Dashboard
+========================
+*/
+
 router.get("/", isAdmin, (req, res) => {
 
     db.query(
@@ -14,13 +20,33 @@ router.get("/", isAdmin, (req, res) => {
                 return res.send(err);
             }
 
-            res.render("admin/dashboard", {
-                questions,
-                user: req.session.user
-            });
+            db.query(
+                "SELECT * FROM rooms ORDER BY id DESC",
+                (err2, rooms) => {
+
+                    if (err2) {
+                        return res.send(err2);
+                    }
+
+                    res.render(
+                        "admin/dashboard",
+                        {
+                            questions,
+                            rooms,
+                            user: req.session.user
+                        }
+                    );
+                }
+            );
         }
     );
 });
+
+/*
+========================
+QUESTION CRUD
+========================
+*/
 
 router.get("/add", isAdmin, (req, res) => {
     res.render("admin/add-question");
@@ -28,11 +54,28 @@ router.get("/add", isAdmin, (req, res) => {
 
 router.post("/add", isAdmin, (req, res) => {
 
-    const { question, order_no } = req.body;
+    const {
+        question,
+        order_no
+    } = req.body;
 
     db.query(
-        "INSERT INTO questions(question,order_no) VALUES(?,?)",
-        [question, order_no],
+        `
+        INSERT INTO questions
+        (
+            question,
+            order_no
+        )
+        VALUES
+        (
+            ?,
+            ?
+        )
+        `,
+        [
+            question,
+            order_no
+        ],
         (err) => {
 
             if (err) {
@@ -67,7 +110,10 @@ router.get("/edit/:id", isAdmin, (req, res) => {
 
 router.post("/edit/:id", isAdmin, (req, res) => {
 
-    const { question, order_no } = req.body;
+    const {
+        question,
+        order_no
+    } = req.body;
 
     db.query(
         `
@@ -108,54 +154,29 @@ router.get("/delete/:id", isAdmin, (req, res) => {
     );
 });
 
-/* =====================
-   ROOMS
-===================== */
-
-router.get("/rooms", isAdmin, (req, res) => {
-
-    db.query(
-        `
-        SELECT
-            r.*,
-            COUNT(u.id) AS total_users
-        FROM rooms r
-        LEFT JOIN users u
-            ON u.room_id = r.id
-        GROUP BY r.id
-        ORDER BY r.id DESC
-        `,
-        (err, rooms) => {
-
-            if (err) {
-                return res.send(err);
-            }
-
-            res.render(
-                "admin/rooms",
-                {
-                    rooms,
-                    user: req.session.user
-                }
-            );
-        }
-    );
-});
+/*
+========================
+ROOM CRUD
+========================
+*/
 
 router.get("/rooms/add", isAdmin, (req, res) => {
 
-    res.render(
-        "admin/add-room"
-    );
+    res.render("admin/add-room");
 
 });
 
 router.post("/rooms/add", isAdmin, (req, res) => {
 
-    const {
-        room_name,
-        room_code
-    } = req.body;
+    const room_name = req.body.room_name;
+
+    const room_code =
+        room_name.toUpperCase()
+        + "-"
+        + Math.random()
+            .toString(36)
+            .substring(2, 6)
+            .toUpperCase();
 
     db.query(
         `
@@ -180,34 +201,25 @@ router.post("/rooms/add", isAdmin, (req, res) => {
                 return res.send(err);
             }
 
-            res.redirect("/admin/rooms");
+            res.redirect("/admin");
         }
     );
 });
 
-router.get(
-    "/rooms/delete/:id",
-    isAdmin,
-    (req, res) => {
+router.get("/rooms/delete/:id", isAdmin, (req, res) => {
 
-        db.query(
-            `
-            DELETE FROM rooms
-            WHERE id=?
-            `,
-            [req.params.id],
-            (err) => {
+    db.query(
+        "DELETE FROM rooms WHERE id=?",
+        [req.params.id],
+        (err) => {
 
-                if (err) {
-                    return res.send(err);
-                }
-
-                res.redirect(
-                    "/admin/rooms"
-                );
+            if (err) {
+                return res.send(err);
             }
-        );
-    }
-);
+
+            res.redirect("/admin");
+        }
+    );
+});
 
 module.exports = router;
