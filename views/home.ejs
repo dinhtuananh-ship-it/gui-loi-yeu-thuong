@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+
 <meta charset="UTF-8">
+
 <title>Gửi lời yêu thương</title>
 
 <link rel="stylesheet" href="/css/style.css">
@@ -22,22 +24,40 @@
         <ul>
 
             <li class="active">
-                <i class="fa-solid fa-house"></i>
-                Trang chủ
-            </li>
-    <li>
-    <a href="/history" class="menu-link">
-        <i class="fa-solid fa-book-open"></i>
-        Nhật ký
-    </a>
-</li>
 
-<li>
-    <a href="/memories" class="menu-link">
-        <i class="fa-solid fa-heart"></i>
-        Kỷ niệm
-    </a>
-</li>
+                <a href="/" class="menu-link">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Trang chủ
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="/history" class="menu-link">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                    Nhật ký
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="/memories" class="menu-link">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    Kỷ niệm
+
+                </a>
+
+            </li>
 
         </ul>
 
@@ -49,19 +69,18 @@
 
             <div class="user-box">
 
-                <% if(user){ %>
+                👋 Xin chào
 
-                    Xin chào,
-                    <strong>
-                        <%= user.username %>
-                    </strong>
-
-                <% } %>
+                <strong>
+                    <%= user.username %>
+                </strong>
 
             </div>
 
             <a href="/logout" class="logout">
+
                 Đăng xuất
+
             </a>
 
         </div>
@@ -69,90 +88,107 @@
         <div class="hero">
 
             <h1>
-                💕 Gửi lời yêu thương 💕
+                💕 Gửi lời yêu thương
             </h1>
 
             <p>
-                Nơi lưu giữ những cảm xúc đẹp nhất
+                Lưu giữ những điều đẹp nhất
             </p>
 
         </div>
 
+        <div class="room-card">
+
+            <h2>
+                🏠 Phòng của bạn
+            </h2>
+
+            <h3>
+                LOVE ROOM
+            </h3>
+
+            <div class="member-box">
+
+                <div>
+                    👤 <%= user.username %>
+                </div>
+
+                <div class="online">
+                    ✅ Online
+                </div>
+
+            </div>
+
+        </div>
+
+        <% if(question){ %>
+
         <div class="question-card">
 
-            <% if(question){ %>
+            <span class="badge">
+                CÂU HỎI HIỆN TẠI
+            </span>
 
-                <span class="badge">
-                    CÂU HỎI HIỆN TẠI
-                </span>
+            <h2>
+                <%= question.question %>
+            </h2>
 
-                <h2>
-                    <%= question.question %>
-                </h2>
+            <% if(waiting){ %>
 
-                <% if(waiting){ %>
+                <div class="status-box waiting">
 
-                    <div class="status-box waiting">
-
-                        <h3>
-                            ✅ Bạn đã trả lời
-                        </h3>
-
-                        <p>
-                            ⏳ Đang chờ người ấy trả lời...
-                        </p>
-
-                        <small>
-                            Khi cả hai hoàn thành,
-                            câu hỏi tiếp theo sẽ tự động mở.
-                        </small>
-
-                    </div>
-
-                <% } else { %>
-
-                    <form
-                        action="/answer"
-                        method="POST"
-                    >
-
-                        <input
-                            type="hidden"
-                            name="question_id"
-                            value="<%= question.id %>"
-                        >
-
-                        <textarea
-                            name="answer"
-                            placeholder="Nhập câu trả lời của bạn..."
-                            required
-                        ></textarea>
-
-                        <button type="submit">
-                            💌 Gửi câu trả lời
-                        </button>
-
-                    </form>
-
-                <% } %>
-
-            <% } else { %>
-
-                <div class="status-box complete">
-
-                    <h2>
-                        🎉 Hai bạn đã hoàn thành tất cả câu hỏi
-                    </h2>
+                    <h3>
+                        💌 Bạn đã trả lời
+                    </h3>
 
                     <p>
-                        Cảm ơn vì đã cùng nhau lưu giữ những kỷ niệm đẹp ❤️
+                        Đang chờ người ấy trả lời...
                     </p>
 
                 </div>
 
+            <% }else{ %>
+
+                <form
+                    action="/answer"
+                    method="POST"
+                >
+
+                    <input
+                        type="hidden"
+                        name="question_id"
+                        value="<%= question.id %>"
+                    >
+
+                    <textarea
+                        name="answer"
+                        placeholder="Viết cảm xúc của bạn..."
+                        required
+                    ></textarea>
+
+                    <button type="submit">
+
+                        💕 Gửi câu trả lời
+
+                    </button>
+
+                </form>
+
             <% } %>
 
         </div>
+
+        <% }else{ %>
+
+            <div class="complete-box">
+
+                <h2>
+                    🎉 Hai bạn đã hoàn thành tất cả câu hỏi
+                </h2>
+
+            </div>
+
+        <% } %>
 
     </div>
 

@@ -446,3 +446,165 @@ body{
 .answer-box p{
     margin-top:8px;
 }
+/*
+=========================
+ROOM CARD
+=========================
+*/
+
+.room-card{
+
+    width:80%;
+    margin:30px auto;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 8px 25px rgba(255,77,136,.1);
+
+}
+
+.room-card h2{
+
+    color:#ff4d88;
+
+    margin-bottom:10px;
+
+}
+
+.room-card h3{
+
+    margin-bottom:15px;
+
+}
+
+.member-box{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px;
+
+    background:#fff4f8;
+
+    border-radius:15px;
+
+}
+
+.online{
+
+    color:#2ecc71;
+
+    font-weight:bold;
+
+}
+
+/*
+=========================
+TIMELINE
+=========================
+*/
+
+.timeline-title{
+
+    background:#ffedf4;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#ff4d88;
+
+    margin-bottom:20px;
+
+}
+
+/*
+=========================
+MEMORY
+=========================
+*/
+
+.hover-card{
+
+    transition:.3s;
+
+}
+
+.hover-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 15px 30px rgba(255,77,136,.15);
+
+}
+
+/*
+=========================
+COMPLETE
+=========================
+*/
+
+.complete-box{
+
+    width:80%;
+
+    margin:40px auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    text-align:center;
+
+    color:#27ae60;
+
+    font-size:20px;
+
+}
+
+/*
+=========================
+ACTIVE MENU FIX
+=========================
+*/
+
+.sidebar li.active{
+
+    background:#ff4d88;
+
+}
+
+.sidebar li.active a{
+
+    color:white !important;
+
+}
+
+/*
+=========================
+BUTTON
+=========================
+*/
+
+.question-card button:hover,
+.memory-btn:hover,
+.view-btn:hover{
+
+    opacity:.9;
+
+    transform:translateY(-2px);
+
+}   

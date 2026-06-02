@@ -12,20 +12,23 @@ MEMORIES
 router.get("/memories", (req, res) => {
 
     db.query(
-        `
-        SELECT
-        memories.*,
-        users.username
-        FROM memories
-        JOIN users
-        ON users.id=memories.user_id
-        WHERE memories.room_id=?
-        ORDER BY memories.created_at DESC
-        `,
-        [
-            req.session.user.room_id
-        ],
-        (err, memories) => {
+`
+SELECT
+    memories.*,
+    users.username
+FROM memories
+
+JOIN users
+ON users.id=memories.user_id
+
+WHERE memories.room_id=?
+
+ORDER BY memories.created_at DESC
+`,
+[
+    req.session.user.room_id
+],
+(err,memories)=>{
 
             if (err) {
                 return res.send(err);
@@ -68,9 +71,9 @@ router.post("/memories/add", (req, res) => {
         INSERT INTO memories
         (
             user_id,
-            room_id,
             title,
-            content
+            content,
+            room_id
         )
         VALUES
         (
@@ -82,9 +85,9 @@ router.post("/memories/add", (req, res) => {
         `,
         [
             req.session.user.id,
-            req.session.user.room_id,
             title,
-            content
+            content,
+            req.session.user.room_id
         ],
         (err) => {
 

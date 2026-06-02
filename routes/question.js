@@ -68,38 +68,30 @@ router.get("/", (req, res) => {
     );
 });
 
-function getAnswers(
-    questionId,
-    roomId
-){
+function getAnswers(questionId, roomId){
 
-    return new Promise(
-        (resolve,reject)=>{
+    return new Promise((resolve,reject)=>{
 
-            db.query(
-                `
-                SELECT *
-                FROM answers
-                WHERE question_id=?
-                AND room_id=?
-                `,
-                [
-                    questionId,
-                    roomId
-                ],
-                (err,result)=>{
+        db.query(
+            `
+            SELECT *
+            FROM answers
+            WHERE question_id=?
+            AND room_id=?
+            `,
+            [questionId, roomId],
+            (err,result)=>{
 
-                    if(err){
-                        reject(err);
-                    }
-
-                    resolve(result);
-
+                if(err){
+                    reject(err);
                 }
-            );
 
-        }
-    );
+                resolve(result);
+
+            }
+        );
+
+    });
 
 }
 
@@ -139,8 +131,8 @@ router.post("/answer", (req, res) => {
                 (
                     question_id,
                     user_id,
-                    room_id,
-                    answer
+                    answer,
+                    room_id
                 )
                 VALUES
                 (
@@ -153,8 +145,8 @@ router.post("/answer", (req, res) => {
                 [
                     question_id,
                     req.session.user.id,
-                    req.session.user.room_id,
-                    answer
+                    answer,
+                    req.session.user.room_id
                 ],
                 () => {
 
@@ -172,40 +164,49 @@ HISTORY
 ==================
 */
 
-router.get("/history", (req, res) => {
+router.get("/history",(req,res)=>{
+
+    if(!req.session.user){
+        return res.redirect("/login");
+    }
 
     db.query(
         `
         SELECT
-        q.question,
-        a.answer,
-        u.username
+            q.question,
+            a.answer,
+            u.username
         FROM answers a
+
         JOIN questions q
             ON q.id=a.question_id
+
         JOIN users u
             ON u.id=a.user_id
+
         WHERE a.room_id=?
+
         ORDER BY q.order_no
         `,
         [
             req.session.user.room_id
         ],
-        (err, answers) => {
+        (err,result)=>{
 
-            if (err) {
+            if(err){
                 return res.send(err);
             }
 
             res.render(
                 "history",
                 {
-                    answers,
+                    answers:result,
                     user:req.session.user
                 }
             );
+
         }
     );
-});
 
+});
 module.exports = router;
