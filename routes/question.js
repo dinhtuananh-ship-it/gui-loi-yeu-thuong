@@ -9,9 +9,9 @@ HOME
 ==================
 */
 
-router.get("/", (req, res) => {
+router.get("/", async (req,res)=>{
 
-    if (!req.session.user) {
+    if(!req.session.user){
         return res.redirect("/login");
     }
 
@@ -19,17 +19,21 @@ router.get("/", (req, res) => {
         req.session.user.room_id;
 
     db.query(
-        "SELECT * FROM questions ORDER BY order_no ASC",
-        async (err, questions) => {
+        `
+        SELECT *
+        FROM questions
+        ORDER BY order_no ASC
+        `,
+        async (err,questions)=>{
 
-            if (err) {
+            if(err){
                 return res.send(err);
             }
 
             let currentQuestion = null;
             let waiting = false;
 
-            for (let q of questions) {
+            for(const q of questions){
 
                 const answers =
                     await getAnswers(
@@ -37,7 +41,7 @@ router.get("/", (req, res) => {
                         roomId
                     );
 
-                if (answers.length < 2) {
+                if(answers.length < 2){
 
                     currentQuestion = q;
 
@@ -48,12 +52,11 @@ router.get("/", (req, res) => {
                             req.session.user.id
                         );
 
-                    if (myAnswer) {
-                        waiting = true;
-                    }
+                    waiting = !!myAnswer;
 
                     break;
                 }
+
             }
 
             res.render(
@@ -61,11 +64,16 @@ router.get("/", (req, res) => {
                 {
                     question: currentQuestion,
                     waiting,
-                    user: req.session.user
+                    completed:
+                        !currentQuestion,
+                    user:
+                        req.session.user
                 }
             );
+
         }
     );
+
 });
 
 function getAnswers(questionId, roomId){
@@ -74,7 +82,7 @@ function getAnswers(questionId, roomId){
 
         db.query(
             `
-            SELECT *
+            SELECT DISTINCT user_id
             FROM answers
             WHERE question_id=?
             AND room_id=?
@@ -84,6 +92,7 @@ function getAnswers(questionId, roomId){
 
                 if(err){
                     reject(err);
+                    return;
                 }
 
                 resolve(result);
@@ -94,7 +103,6 @@ function getAnswers(questionId, roomId){
     });
 
 }
-
 /*
 ==================
 ANSWER

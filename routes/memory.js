@@ -14,15 +14,12 @@ router.get("/memories", (req, res) => {
     db.query(
 `
 SELECT
-    memories.*,
-    users.username
+memories.*,
+users.username
 FROM memories
-
 JOIN users
-ON users.id=memories.user_id
-
+ON users.id = memories.user_id
 WHERE memories.room_id=?
-
 ORDER BY memories.created_at DESC
 `,
 [
@@ -71,9 +68,10 @@ router.post("/memories/add", (req, res) => {
         INSERT INTO memories
         (
             user_id,
+            room_id,
             title,
-            content,
-            room_id
+            content
+            
         )
         VALUES
         (
@@ -84,11 +82,11 @@ router.post("/memories/add", (req, res) => {
         )
         `,
         [
-            req.session.user.id,
-            title,
-            content,
-            req.session.user.room_id
-        ],
+    req.session.user.id,
+    req.session.user.room_id,
+    title,
+    content
+],
         (err) => {
 
             if (err) {
