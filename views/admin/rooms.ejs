@@ -5,7 +5,6 @@
 <title>Quản lý phòng</title>
 
 <link rel="stylesheet" href="/css/admin.css">
-
 </head>
 <body>
 
@@ -13,9 +12,7 @@
 
     <div class="topbar">
 
-        <h1>
-            💕 Quản lý phòng
-        </h1>
+        <h1>🏠 Quản lý phòng</h1>
 
         <div>
 
@@ -23,14 +20,28 @@
                 Dashboard
             </a>
 
-            <a
-                href="/admin/rooms/add"
-                class="add-btn"
-            >
-                ➕ Tạo phòng
-            </a>
-
         </div>
+
+    </div>
+
+    <div class="form-card">
+
+        <h2>Tạo mã phòng mới</h2>
+
+        <form action="/admin/rooms/add" method="POST">
+
+            <input
+                type="text"
+                name="room_code"
+                placeholder="Ví dụ: LOVE001"
+                required
+            >
+
+            <button type="submit">
+                Tạo phòng
+            </button>
+
+        </form>
 
     </div>
 
@@ -41,17 +52,19 @@
             <thead>
 
                 <tr>
+
                     <th>ID</th>
-                    <th>Tên phòng</th>
                     <th>Mã phòng</th>
+                    <th>Số thành viên</th>
                     <th>Thao tác</th>
+
                 </tr>
 
             </thead>
 
             <tbody>
 
-            <% rooms.forEach(room=>{ %>
+                <% rooms.forEach(room => { %>
 
                 <tr>
 
@@ -60,18 +73,19 @@
                     </td>
 
                     <td>
-                        <%= room.room_name %>
+                        <%= room.room_code %>
                     </td>
 
                     <td>
-                        <%= room.room_code %>
+                        <%= room.member_count %>
                     </td>
 
                     <td>
 
                         <a
-                        href="/admin/rooms/delete/<%= room.id %>"
-                        class="delete-btn"
+                            href="/admin/rooms/delete/<%= room.id %>"
+                            class="delete-btn"
+                            onclick="return confirm('Xóa phòng này?')"
                         >
                             Xóa
                         </a>
@@ -80,7 +94,7 @@
 
                 </tr>
 
-            <% }) %>
+                <% }) %>
 
             </tbody>
 

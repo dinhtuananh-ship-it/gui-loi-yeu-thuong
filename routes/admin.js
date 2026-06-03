@@ -168,42 +168,30 @@ router.get("/rooms/add", isAdmin, (req, res) => {
 
 router.post("/rooms/add", isAdmin, (req, res) => {
 
-    const room_name = req.body.room_name;
-
-    const room_code =
-        room_name.toUpperCase()
-        + "-"
-        + Math.random()
-            .toString(36)
-            .substring(2, 6)
-            .toUpperCase();
+    const { room_code } = req.body;
 
     db.query(
         `
         INSERT INTO rooms
         (
-            room_name,
             room_code
         )
         VALUES
         (
-            ?,
             ?
         )
         `,
-        [
-            room_name,
-            room_code
-        ],
+        [room_code.toUpperCase()],
         (err) => {
 
-            if (err) {
+            if(err){
                 return res.send(err);
             }
 
-            res.redirect("/admin");
+            res.redirect("/admin/rooms");
         }
     );
+
 });
 
 router.get("/rooms/delete/:id", isAdmin, (req, res) => {
@@ -225,15 +213,19 @@ router.get("/rooms/delete/:id", isAdmin, (req, res) => {
    QUẢN LÝ PHÒNG
 ========================== */
 
-router.get("/rooms", isAdmin, (req,res)=>{
+router.get("/rooms", isAdmin, (req, res) => {
 
     db.query(
         `
-        SELECT *
-        FROM rooms
-        ORDER BY id DESC
+        SELECT
+            r.*,
+            COUNT(u.id) AS member_count
+        FROM rooms r
+        LEFT JOIN users u
+        ON u.room_id = r.id
+        GROUP BY r.id
         `,
-        (err,rooms)=>{
+        (err, rooms) => {
 
             if(err){
                 return res.send(err);
@@ -242,11 +234,9 @@ router.get("/rooms", isAdmin, (req,res)=>{
             res.render(
                 "admin/rooms",
                 {
-                    rooms,
-                    user:req.session.user
+                    rooms
                 }
             );
-
         }
     );
 
@@ -260,36 +250,29 @@ router.get("/rooms/add", isAdmin,(req,res)=>{
 });
 
 
-router.post("/rooms/add", isAdmin,(req,res)=>{
+router.post("/rooms/add", isAdmin, (req, res) => {
 
-    const {
-        room_name,
-        room_code
-    } = req.body;
+    const { room_code } = req.body;
 
     db.query(
         `
         INSERT INTO rooms
         (
-            room_name,
             room_code
         )
-        VALUES (?,?)
+        VALUES
+        (
+            ?
+        )
         `,
-        [
-            room_name,
-            room_code
-        ],
-        (err)=>{
+        [room_code],
+        (err) => {
 
             if(err){
                 return res.send(err);
             }
 
-            res.redirect(
-                "/admin/rooms"
-            );
-
+            res.redirect("/admin/rooms");
         }
     );
 
