@@ -26,16 +26,34 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-    if (!req.session.csrfToken) req.session.csrfToken = crypto.randomBytes(32).toString("hex");
+    res.set("Cache-Control", "no-store");
+    next();
+});
+
+app.use((req, res, next) => {
+    const newToken = !req.session.csrfToken;
+    if (newToken) req.session.csrfToken = crypto.randomBytes(32).toString("hex");
     res.locals.csrfToken = req.session.csrfToken;
     res.locals.user = req.session.user || null;
     res.locals.error = req.session.flashError || null;
     delete req.session.flashError;
-    if (req.method !== "POST") return next();
+    if (req.method !== "POST") {
+        // Persist the anonymous session before sending an HTML form and its token.
+        if (newToken) return req.session.save(next);
+        return next();
+    }
     const token = req.body._csrf;
     if (typeof token !== "string" || !/^[a-f0-9]{64}$/.test(token) ||
         !crypto.timingSafeEqual(Buffer.from(token), Buffer.from(req.session.csrfToken))) {
-        return res.status(403).send("Phiên biểu mẫu đã hết hạn. Vui lòng tải lại trang.");
+        if (req.path === "/login" || req.path === "/register") {
+            return req.session.save(err => {
+                if (err) return next(err);
+                res.status(403).render(req.path.slice(1), {
+                    error: "Phiên đăng nhập đã hết hạn. Vui lòng nhập lại thông tin và thử lần nữa."
+                });
+            });
+        }
+        return res.status(403).send("Phiên biểu mẫu đã hết hạn. Vui lòng tải lại trang và thử lại.");
     }
     next();
 });

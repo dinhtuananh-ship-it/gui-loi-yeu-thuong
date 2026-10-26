@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "Gửi lời yêu thương",
+  "short_name": "Lời thương",
+  "description": "Một góc nhỏ riêng tư cho hai bạn cùng trò chuyện, lưu kỷ niệm và chăm sóc thú cưng.",
+  "lang": "vi",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8f3ec",
+  "theme_color": "#ad635d",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

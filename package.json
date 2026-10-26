@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "setup": "node scripts/setup.js",
+    "icons": "node scripts/generate-icons.js",
     "test": "node --test"
   },
   "keywords": [],
@@ -20,5 +21,8 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
   }
 }

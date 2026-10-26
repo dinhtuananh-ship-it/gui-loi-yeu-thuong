@@ -1206,6 +1206,19 @@ button:focus-visible {
   .editor-foot { align-items: stretch; flex-direction: column; }
   .question-editor .editor-foot .button { width: 100%; }
 }
+.pwa-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 20% 10%, #f0dacf, transparent 45%), var(--paper); }
+.pwa-card { width: min(690px, 100%); padding: clamp(28px, 6vw, 66px); background: var(--white); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.pwa-card > img { display: block; border-radius: 18px; margin-bottom: 30px; }
+.pwa-card .lead { margin-bottom: 28px; }
+.install-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin: 32px 0; }
+.install-steps section { background: #f8f0e9; padding: 20px; border-radius: 12px; }
+.install-steps h2 { font-size: 1.3rem; margin: 14px 0 10px; }
+.install-steps p { font-size: .85rem; line-height: 1.7; color: var(--muted); margin: 0; }
+.install-card > .muted { font-size: .85rem; }
+.side-bottom a { color: var(--rose-dark); font-weight: 700; }
+.install-shortcut { text-align: center; margin: 24px 0 8px; font-size: .82rem; }
+.install-shortcut a { color: var(--rose-dark); font-weight: 700; }
+@media (max-width: 700px) { .install-steps { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,
