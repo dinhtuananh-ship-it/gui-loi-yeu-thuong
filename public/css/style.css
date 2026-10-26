@@ -1136,7 +1136,7 @@ button:focus-visible {
 .pet-stage { position: relative; min-height: 380px; overflow: hidden; display: flex; align-items: center; justify-content: space-around; gap: 28px; background: linear-gradient(145deg, #fae6d7, #f4efe2 58%, #e7edda); border: 1px solid var(--line); border-radius: 18px; padding: 38px; }
 .pet-sky { position: absolute; top: 35px; left: 35px; letter-spacing: 2rem; color: var(--rose); }
 .pet-ground { position: absolute; bottom: -80px; left: -10%; right: -10%; height: 170px; border-radius: 50% 50% 0 0; background: #d9e4cd; }
-.pet-portrait { position: relative; z-index: 1; flex: none; width: 230px; height: 230px; display: grid; place-items: center; border-radius: 50%; background: #ffffff99; box-shadow: 0 20px 50px #6b39361a; animation: float 5s ease-in-out infinite; }
+.pet-portrait { position: relative; z-index: 1; flex: none; width: 230px; height: 230px; display: grid; place-items: center; border-radius: 50%; background: #ffffff99; box-shadow: 0 20px 50px #6b39361a; }
 .pet-face { font-size: 8rem; line-height: 1; }
 .pet-accessory { position: absolute; z-index: 2; top: -24px; left: 50%; transform: translateX(-50%) rotate(-14deg); font-size: 5rem; filter: drop-shadow(0 5px 5px #6b393633); }
 .pet-stage-caption { position: relative; z-index: 1; max-width: 340px; }
