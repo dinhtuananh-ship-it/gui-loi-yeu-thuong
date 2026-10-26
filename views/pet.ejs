@@ -1,0 +1,30 @@
+<%- include('partials/head', { title: 'Thú cưng' }) %>
+<div class="layout"><%- include('partials/nav', { active: 'pet' }) %>
+<section class="page-content pet-page">
+  <div class="eyebrow">✳ &nbsp; NGƯỜI BẠN NHỎ CỦA HAI TA</div>
+  <h1>Ngôi nhà <em>thú cưng.</em></h1>
+  <p class="lead">Cùng chăm chút cho một người bạn đáng yêu, từng câu trả lời sẽ mang đến 100 xu cho phòng của hai bạn.</p>
+  <div class="coin-pill" aria-label="Số xu của phòng">✦ <strong><%= pet.coins %></strong> xu của hai bạn</div>
+  <% if (!pet.pet_species) { %>
+    <div class="pet-intro"><span>♡</span><h2>Chọn một người bạn để cùng chăm sóc</h2><p>Mỗi phòng chọn một bé, và cả hai đều có thể sắm đồ cho bé.</p></div>
+    <div class="species-grid">
+      <% Object.entries(species).forEach(([id, option]) => { %>
+        <form class="species-card" action="/pet/adopt" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="species" value="<%= id %>"><span class="species-emoji"><svg role="img" aria-label="<%= option.name %>" viewBox="0 0 240 240"><use href="/img/pets.svg#<%= id %>"></use></svg></span><h2><%= option.name %></h2><button class="button" type="submit">Chọn bé này ↗</button></form>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="pet-stage"><div class="pet-sky">✦ &nbsp; ♡ &nbsp; ✦</div><div class="pet-portrait" role="img" aria-label="<%= species[pet.pet_species].name %><%= pet.equipped_item ? ' với ' + items[pet.equipped_item]?.name : '' %>"><% if (pet.equipped_item) { %><span class="pet-accessory"><%= items[pet.equipped_item]?.icon %></span><% } %><svg class="pet-face" aria-hidden="true" viewBox="0 0 240 240"><use href="/img/pets.svg#<%= pet.pet_species %>"></use></svg></div><div class="pet-ground"></div><div class="pet-stage-caption"><span class="eyebrow">NGƯỜI BẠN NHỎ CỦA HAI TA</span><h2><%= species[pet.pet_species].name %></h2><p><%= pet.equipped_item ? 'Đang diện ' + items[pet.equipped_item]?.name : 'Đang đợi bộ đồ đầu tiên của bé!' %></p><a class="button" href="#shop">Vào shop quần áo ↓</a></div></div>
+    <div class="section-heading" id="shop"><span>SHOP QUẦN ÁO CHO BÉ</span><span>✿</span></div>
+    <p class="muted">Trả lời câu hỏi để nhận xu, chọn món đồ hai bạn thích rồi cùng diện cho bé.</p>
+    <div class="shop-grid">
+      <% Object.entries(items).forEach(([id, item]) => { const owned = inventory.has(id); %>
+        <article class="shop-card"><div class="shop-art" role="img" aria-label="<%= item.name %>"><%= item.icon %></div><div class="shop-info"><h3><%= item.name %></h3><span>✦ <%= item.price %> xu</span></div>
+          <% if (pet.equipped_item === id) { %><span class="shop-state">Đang mặc ✓</span>
+          <% } else if (owned) { %><form action="/pet/equip" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="item_id" value="<%= id %>"><button class="button" type="submit">Mặc cho bé ↗</button></form>
+          <% } else { %><form action="/pet/buy" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="item_id" value="<%= id %>"><button class="button" type="submit" <%= pet.coins < item.price ? 'disabled' : '' %>>Mua cho bé ↗</button></form><% } %>
+        </article>
+      <% }) %>
+    </div>
+    <% if (pet.equipped_item) { %><form class="remove-outfit" action="/pet/equip" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="item_id" value="none"><button class="text-link" type="submit">Cất đồ, cho bé mặc tự nhiên →</button></form><% } %>
+  <% } %>
+</section></main></div></body></html>

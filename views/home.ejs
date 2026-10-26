@@ -1,198 +1,78 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-
-<meta charset="UTF-8">
-
-<title>Gửi lời yêu thương</title>
-
-<link rel="stylesheet" href="/css/style.css">
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-
-</head>
-<body>
-
-<div class="container">
-
-    <div class="sidebar">
-
-        <div class="logo">
-            ❤️ Gửi lời yêu thương
-        </div>
-
-        <ul>
-
-            <li class="active">
-
-                <a href="/" class="menu-link">
-
-                    <i class="fa-solid fa-house"></i>
-
-                    Trang chủ
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="/history" class="menu-link">
-
-                    <i class="fa-solid fa-book-open"></i>
-
-                    Nhật ký
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="/memories" class="menu-link">
-
-                    <i class="fa-solid fa-heart"></i>
-
-                    Kỷ niệm
-
-                </a>
-
-            </li>
-
-        </ul>
-
-    </div>
-
-    <div class="main">
-
-        <div class="topbar">
-
-            <div class="user-box">
-
-                👋 Xin chào
-
-                <strong>
-                    <%= user.username %>
-                </strong>
-
-            </div>
-
-            <a href="/logout" class="logout">
-
-                Đăng xuất
-
-            </a>
-
-        </div>
-
-        <div class="hero">
-
-            <h1>
-                💕 Gửi lời yêu thương
-            </h1>
-
-            <p>
-                Lưu giữ những điều đẹp nhất
-            </p>
-
-        </div>
-
-        <div class="room-card">
-
-            <h2>
-                🏠 Phòng của bạn
-            </h2>
-
-            <h3>
-                LOVE ROOM
-            </h3>
-
-            <div class="member-box">
-
-                <div>
-                    👤 <%= user.username %>
-                </div>
-
-                <div class="online">
-                    ✅ Online
-                </div>
-
-            </div>
-
-        </div>
-
-        <% if(question){ %>
-
-        <div class="question-card">
-
-            <span class="badge">
-                CÂU HỎI HIỆN TẠI
-            </span>
-
-            <h2>
-                <%= question.question %>
-            </h2>
-
-            <% if(waiting){ %>
-
-                <div class="status-box waiting">
-
-                    <h3>
-                        💌 Bạn đã trả lời
-                    </h3>
-
-                    <p>
-                        Đang chờ người ấy trả lời...
-                    </p>
-
-                </div>
-
-            <% }else{ %>
-
-                <form
-                    action="/answer"
-                    method="POST"
-                >
-
-                    <input
-                        type="hidden"
-                        name="question_id"
-                        value="<%= question.id %>"
-                    >
-
-                    <textarea
-                        name="answer"
-                        placeholder="Viết cảm xúc của bạn..."
-                        required
-                    ></textarea>
-
-                    <button type="submit">
-
-                        💕 Gửi câu trả lời
-
-                    </button>
-
-                </form>
-
-            <% } %>
-
-        </div>
-
-        <% }else{ %>
-
-            <div class="complete-box">
-
-                <h2>
-                    🎉 Hai bạn đã hoàn thành tất cả câu hỏi
-                </h2>
-
-            </div>
-
+<%- include('partials/head', { title: 'Hôm nay' }) %>
+<div class="layout"><%- include('partials/nav', { active: 'home' }) %>
+  <section class="page-content">
+    <div class="eyebrow">✳ &nbsp; MỘT CHÚT THỜI GIAN CHO NHAU</div>
+    <h1>Chuyện của <em>chúng mình.</em></h1>
+    <p class="lead">Có những điều thật đẹp khi được nói ra. Hôm nay, hãy cùng nhau chia sẻ thêm một chút nhé.</p>
+    <div class="journey-strip"><div class="journey-badge">✦</div><div><strong>Mỗi câu hỏi là một cuộc hẹn nhỏ</strong><span>Hai bạn cùng khám phá những câu hỏi bất ngờ, theo nhịp riêng của mình.</span></div><a href="/pet" class="journey-link">100 xu cho mỗi lời nhắn ↗</a></div>
+
+    <div class="question-layout">
+      <div class="feature-card">
+        <div class="feature-top"><span class="tag">CÂU HỎI DÀNH CHO HAI BẠN</span><span class="feature-icon">✳</span></div>
+        <% if (question) { %>
+          <div class="question-meta"><span class="question-number">CÂU HỎI <%= completed + 1 %> / <%= total %></span><span class="question-surprise">✧ Một câu hỏi bất ngờ cho hai bạn</span></div>
+          <h2><%= question.question %></h2>
+          <p>Cả hai cùng trả lời để mở khóa những điều người ấy muốn chia sẻ.</p>
+        <% } else if (total === 0) { %>
+          <h2>Câu chuyện sắp bắt đầu.</h2><p>Chưa có câu hỏi nào. Hãy quay lại sau khi có câu hỏi mới nhé.</p>
+        <% } else { %>
+          <h2>Hai bạn đã cùng viết nên một câu chuyện thật đẹp.</h2><p>Đã trả lời hết mọi câu hỏi. Ghé nhật ký để đọc lại những lời hai bạn dành cho nhau nhé.</p><a class="button" href="/history">Đọc nhật ký ↗</a>
         <% } %>
+      </div>
 
+      <% if (question) { %>
+        <div class="answer-section-heading"><span>HAI GÓC NHÌN, MỘT CÂU CHUYỆN</span><span>♡</span></div>
+        <div class="couple-answers">
+          <% room.members.forEach((member, index) => { const isMe = member.id === user.id; %>
+            <div class="couple-answer-card <%= index === 1 ? 'partner-card' : '' %>">
+              <div class="answer-person"><span class="member-avatar color-<%= index %>"><%= member.username.slice(0, 1).toUpperCase() %></span><div><strong><%= member.username %></strong><small><%= isMe ? 'Câu trả lời của bạn' : 'Câu trả lời của người ấy' %></small></div></div>
+              <% if (isMe && question.answered) { %>
+                <div class="my-answer"><span class="small-label">CÂU TRẢ LỜI CỦA BẠN · CHỈ BẠN NHÌN THẤY</span><p><%= ownAnswer %></p></div>
+                <details class="edit-answer"><summary>Sửa câu trả lời <span>↗</span></summary>
+                  <form action="/answer" method="post" class="answer-form">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="question_id" value="<%= question.id %>">
+                    <label for="answer">VIẾT LẠI LỜI NHẮN</label>
+                    <textarea id="answer" name="answer" maxlength="5000" required><%= ownAnswer %></textarea>
+                    <button class="button" type="submit">Lưu thay đổi ↗</button>
+                  </form>
+                </details>
+              <% } else if (isMe) { %>
+                <form action="/answer" method="post" class="answer-form">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="question_id" value="<%= question.id %>">
+                  <label for="answer">LỜI NHẮN CỦA BẠN</label>
+                  <textarea id="answer" name="answer" placeholder="Viết điều bạn đang nghĩ, thật lòng thôi..." maxlength="5000" required></textarea>
+                  <button class="button" type="submit">Gửi câu trả lời ↗</button>
+                </form>
+              <% } else { %>
+                <div class="answer-locked"><span>✉</span><strong><%= isMe ? 'Bạn đã gửi câu trả lời' : 'Lời nhắn đang được giữ kín' %></strong><p><%= isMe ? 'Khi người ấy cũng trả lời, cả hai sẽ cùng xem được nội dung.' : 'Câu trả lời chỉ mở ra khi cả hai cùng hoàn thành.' %></p></div>
+              <% } %>
+            </div>
+          <% }) %>
+          <% if (room.members.length < 2) { %>
+            <div class="couple-answer-card partner-card"><div class="answer-person"><span class="member-avatar color-1">♡</span><div><strong>Người ấy</strong><small>Đang đợi tham gia</small></div></div><div class="answer-locked"><span>♡</span><strong>Chờ người ấy vào phòng</strong><p>Chia sẻ mã phòng bên dưới để cùng nhau trả lời câu hỏi.</p></div></div>
+          <% } %>
+        </div>
+        <p class="privacy-note">✧ Bạn có thể xem và sửa câu trả lời của mình cho đến khi cả hai cùng gửi. Sau đó nội dung sẽ được khóa lại.</p>
+      <% } %>
+
+      <% if (latest) { %>
+        <div class="answer-section-heading revealed-heading"><span>VỪA MỞ KHÓA · CẢ HAI ĐÃ TRẢ LỜI</span><a href="/history" class="text-link">Xem tất cả trong nhật ký →</a></div>
+        <div class="revealed-question"><h2><%= latest.question %></h2></div>
+        <div class="couple-answers revealed-answers">
+          <% latest.answers.forEach((item, index) => { %>
+            <div class="couple-answer-card <%= index === 1 ? 'partner-card' : '' %>"><div class="answer-person"><span class="member-avatar color-<%= index %>"><%= item.username.slice(0, 1).toUpperCase() %></span><div><strong><%= item.username %></strong><small><%= item.user_id === user.id ? 'Bạn' : 'Người ấy' %></small></div></div><p class="revealed-text"><%= item.answer %></p></div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div class="home-summary">
+        <a class="pet-teaser" href="/pet"><span class="pet-teaser-icon">✿</span><span><strong>Thú cưng của hai bạn</strong><small>Mỗi lần trả lời nhận 100 xu. Cùng chọn một người bạn nhỏ và sắm đồ xinh nhé!</small></span><span>↗</span></a>
+        <div class="room-panel"><div class="panel-label">KHÔNG GIAN CỦA CHÚNG MÌNH <span>♡</span></div><h3>Phòng của hai ta</h3><div class="room-code"><%= room.room_code %></div><p class="muted room-invite">Chia sẻ mã này với người ấy. Phòng chỉ dành cho hai bạn.</p><div class="divider"></div><span class="small-label">NHỮNG NGƯỜI Ở ĐÂY</span><div class="member-list"><% room.members.forEach((member, index) => { %><div class="member"><span class="member-avatar color-<%= index %>"><%= member.username.slice(0, 1).toUpperCase() %></span><%= member.username %><% if (member.id === user.id) { %><small>Bạn</small><% } %></div><% }) %><% if (room.members.length < 2) { %><p class="muted">Đang chờ người ấy tham gia bằng mã phòng này.</p><% } %></div></div>
+        <div class="progress-panel"><span class="small-label">HÀNH TRÌNH CÙNG NHAU</span><div class="progress-value"><strong><%= completed %></strong><span>/ <%= total %> câu hỏi</span></div><div class="progress-track"><div style="width: <%= total ? Math.round(completed / total * 100) : 0 %>%"></div></div><p>Mỗi câu trả lời là một lần hiểu nhau hơn.</p><a class="progress-link" href="/history">Mở nhật ký của hai ta →</a></div>
+      </div>
     </div>
-
-</div>
-
-</body>
-</html>
+    <div class="closing-line">✦ &nbsp; Yêu thương được tạo nên từ những điều giản dị mỗi ngày. &nbsp; ✦</div>
+  </section>
+</main></div></body></html>

@@ -1,88 +1,29 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Đăng ký - Gửi lời yêu thương</title>
-
-<link rel="stylesheet" href="/css/auth.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-</head>
-<body>
-
-<div class="auth-container">
-
-    <div class="auth-card">
-
-        <div class="logo">
-            💕
-        </div>
-
-        <h1>Đăng ký</h1>
-
-        <p class="subtitle">
-            Tạo tài khoản để bắt đầu hành trình yêu thương
-        </p>
-
-        <form action="/register" method="POST">
-
-            <div class="input-group">
-
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Tên đăng nhập"
-                    required
-                >
-
-            </div>
-
-            <div class="input-group">
-
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Mật khẩu"
-                    required
-                >
-
-            </div>
-
-<div class="input-group">
-
-    <input
-        type="text"
-        name="room_code"
-        placeholder="Mã phòng được admin cấp"
-        required
-    >
-
-</div>
-            <button
-                type="submit"
-                class="btn-auth"
-            >
-                Đăng ký
-            </button>
-
-        </form>
-
-        <div class="bottom-text">
-
-            Đã có tài khoản?
-
-            <a href="/login">
-                Đăng nhập ngay
-            </a>
-
-        </div>
-
+<%- include('partials/head', { title: 'Đăng ký' }) %>
+<div class="auth-layout">
+  <div class="auth-art"><a class="brand" href="/"><span class="brand-mark">♡</span><span>gửi lời<br><strong>yêu thương.</strong></span></a><div class="art-center"><span class="art-icon">✳</span><div class="art-heart">♡</div><p>"Mỗi ngày một câu hỏi,<br>mỗi ngày gần nhau hơn."</p></div><span class="art-footer">MỘT GÓC NHỎ CHỈ DÀNH CHO HAI TA ✦</span></div>
+  <div class="auth-side"><div class="auth-inner">
+    <div class="eyebrow">✳ &nbsp; BẮT ĐẦU CÂU CHUYỆN CỦA BẠN</div>
+    <h1>Cùng nhau <em>bắt đầu.</em></h1>
+    <p class="lead">Tạo một phòng riêng rồi gửi mã cho người ấy, hoặc dùng mã được chia sẻ để tham gia.</p>
+    <% if (error) { %><div class="alert" role="alert"><%= error %></div><% } %>
+    <div class="register-switch" role="group" aria-label="Cách đăng ký">
+      <button type="button" class="selected" data-mode="create" aria-pressed="true">Tạo phòng mới</button>
+      <button type="button" data-mode="join" aria-pressed="false">Tham gia phòng</button>
     </div>
-
+    <form action="/register" method="post" class="auth-form" id="register-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="mode" id="register-mode" value="create">
+      <label for="username">TÊN ĐĂNG NHẬP</label>
+      <input id="username" name="username" autocomplete="username" minlength="3" maxlength="50" required placeholder="Bạn muốn được gọi là gì?">
+      <label for="password">MẬT KHẨU</label>
+      <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required placeholder="Tối thiểu 8 ký tự">
+      <label for="room_code" id="room-label">ĐẶT MÃ PHÒNG CỦA BẠN</label>
+      <input id="room_code" name="room_code" pattern="[A-Za-z0-9-]{3,32}" minlength="3" maxlength="32" required placeholder="Ví dụ: CHUNGMINH2026" autocapitalize="characters" spellcheck="false">
+      <p class="field-help" id="room-help">Chọn mã gồm 3-32 chữ cái, số hoặc dấu gạch ngang. Chỉ thêm một người có thể tham gia bằng mã này.</p>
+      <button class="button" type="submit" id="register-submit">Tạo tài khoản và phòng ↗</button>
+    </form>
+    <p class="auth-switch">Đã có tài khoản? <a href="/login">Đăng nhập →</a></p>
+  </div></div>
 </div>
-
-</body>
-</html>
+<script src="/js/register.js" defer></script>
+</body></html>

@@ -1,48 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
-
-<title>Thêm câu hỏi</title>
-
-<link rel="stylesheet"
-href="/css/admin.css">
-
-</head>
-
-<body>
-
-<div class="form-card">
-
-<h1>
-💕 Thêm câu hỏi mới
-</h1>
-
-<form
-action="/admin/add"
-method="POST"
->
-
-<textarea
-name="question"
-required
-></textarea>
-
-<input
-type="number"
-name="order_no"
-required
-placeholder="Thứ tự hiển thị"
->
-
-<button>
-Lưu câu hỏi
-</button>
-
-</form>
-
-</div>
-
-</body>
-</html>
+<%- include('../partials/head', { title: 'Thêm câu hỏi' }) %>
+<div class="admin-wrap">
+  <a class="text-link" href="/admin">← Trở về danh sách</a>
+  <div class="eyebrow spaced">✳ &nbsp; GỢI MỞ MỘT CUỘC TRÒ CHUYỆN</div>
+  <h1>Thêm <em>câu hỏi.</em></h1>
+  <p class="lead">Hãy viết một điều khiến hai bạn muốn dừng lại và lắng nghe nhau. Hệ thống sẽ tự chọn câu hỏi ngẫu nhiên cho mỗi phòng.</p>
+  <% if (error) { %><div class="alert" role="alert"><%= error %></div><% } %>
+  <div class="editor-card question-editor">
+    <form action="/admin/add" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="question">NỘI DUNG CÂU HỎI</label>
+      <textarea id="question" name="question" maxlength="1000" required placeholder="Một khoảnh khắc nào với người ấy mà bạn muốn sống lại lần nữa?"></textarea>
+      <div class="editor-foot"><span>✦ Không cần chọn thứ tự hiển thị</span><button class="button" type="submit">Thêm vào bộ câu hỏi ↗</button></div>
+    </form>
+  </div>
+</div></body></html>

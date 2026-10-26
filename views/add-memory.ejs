@@ -1,45 +1,5 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>Thêm kỷ niệm</title>
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-
-<div class="memory-form">
-
-    <h1>
-        ❤️ Thêm kỷ niệm
-    </h1>
-
-    <form
-        action="/memories/add"
-        method="POST"
-    >
-
-        <input
-            type="text"
-            name="title"
-            placeholder="Tiêu đề"
-            required
-        >
-
-        <textarea
-            name="content"
-            placeholder="Nội dung kỷ niệm..."
-            required
-        ></textarea>
-
-        <button type="submit">
-            Lưu kỷ niệm
-        </button>
-
-    </form>
-
-</div>
-
-</body>
-</html>
+<%- include('partials/head', { title: 'Viết kỷ niệm' }) %>
+<div class="layout"><%- include('partials/nav', { active: 'memories' }) %>
+<section class="page-content"><a href="/memories" class="text-link">← Trở về hộp kỷ niệm</a><div class="eyebrow spaced">✳ &nbsp; GIỮ LẠI MỘT KHOẢNH KHẮC</div><h1>Viết một <em>kỷ niệm.</em></h1><p class="lead">Một ngày bình thường cũng có thể trở thành một điều thật đặc biệt.</p>
+<div class="editor-card"><form action="/memories/add" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><label for="title">ĐẶT TÊN CHO KHOẢNH KHẮC NÀY</label><input id="title" name="title" maxlength="150" placeholder="Ví dụ: Buổi chiều đầu tiên mình gặp nhau" required><label for="content">CÂU CHUYỆN CỦA BẠN</label><textarea id="content" name="content" maxlength="10000" placeholder="Hôm ấy, chúng mình..." required></textarea><div class="form-footer"><span>Chỉ hai bạn mới đọc được kỷ niệm này.</span><button class="button" type="submit">Lưu kỷ niệm ↗</button></div></form></div>
+</section></main></div></body></html>

@@ -1,0 +1,14 @@
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Về trang chủ"><span class="brand-mark">♡</span><span>gửi lời<br><strong>yêu thương.</strong></span></a>
+  <div class="side-label">GÓC CỦA HAI TA</div>
+  <nav class="nav-links" aria-label="Điều hướng chính">
+    <a href="/" class="<%= active === 'home' ? 'selected' : '' %>"><span>✦</span> Hôm nay</a>
+    <a href="/history" class="<%= active === 'history' ? 'selected' : '' %>"><span>▤</span> Nhật ký</a>
+    <a href="/memories" class="<%= active === 'memories' ? 'selected' : '' %>"><span>♡</span> Kỷ niệm</a>
+    <a href="/pet" class="<%= active === 'pet' ? 'selected' : '' %>"><span>✿</span> Thú cưng</a>
+  </nav>
+  <div class="side-bottom"><span class="side-flower">✳</span><p>Mỗi câu chuyện nhỏ<br>đều đáng được nhớ mãi.</p></div>
+</aside>
+<main class="main">
+  <header class="topbar"><span class="topbar-note">MỘT KHÔNG GIAN CHỈ DÀNH CHO HAI BẠN</span><div class="top-actions"><span class="user-pill"><span class="avatar"><%= user.username.slice(0, 1).toUpperCase() %></span><%= user.username %></span><form action="/logout" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="logout" type="submit" title="Đăng xuất">Đăng xuất ↗</button></form></div></header>
+  <% if (error) { %><div class="alert" role="alert"><%= error %></div><% } %>

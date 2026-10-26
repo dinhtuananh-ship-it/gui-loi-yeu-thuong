@@ -1,66 +1,20 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập - Gửi lời yêu thương</title>
-
-    <link rel="stylesheet" href="/css/auth.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<div class="auth-container">
-
-    <div class="auth-card">
-
-        <div class="logo">
-            💕
-        </div>
-
-        <h1>Đăng nhập</h1>
-
-        <p class="subtitle">
-            Chào mừng quay trở lại
-        </p>
-
-        <form action="/login" method="POST">
-
-            <div class="input-group">
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Tên đăng nhập"
-                    required
-                >
-            </div>
-
-            <div class="input-group">
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Mật khẩu"
-                    required
-                >
-            </div>
-
-            <button type="submit" class="btn-auth">
-                Đăng nhập
-            </button>
-
-        </form>
-
-        <div class="bottom-text">
-            Chưa có tài khoản?
-            <a href="/register">
-                Đăng ký ngay
-            </a>
-        </div>
-
-    </div>
-
-</div>
-
-</body>
-</html>
+<%- include('partials/head', { title: 'Đăng nhập' }) %>
+<div class="auth-layout">
+  <div class="auth-art"><a class="brand" href="/"><span class="brand-mark">♡</span><span>gửi lời<br><strong>yêu thương.</strong></span></a><div class="art-center"><span class="art-icon">✳</span><div class="art-heart">♡</div><p>"Tình yêu bắt đầu từ<br>những điều mình sẻ chia."</p></div><span class="art-footer">MỘT GÓC NHỎ CHỈ DÀNH CHO HAI TA ✦</span></div>
+  <div class="auth-side"><div class="auth-inner">
+    <div class="eyebrow">✳ &nbsp; THẬT VUI VÌ BẠN ĐÃ QUAY LẠI</div>
+    <h1>Chào mừng <em>trở lại.</em></h1>
+    <p class="lead">Những câu chuyện của hai bạn đang đợi ở đây.</p>
+    <% if (error) { %><div class="alert" role="alert"><%= error %></div><% } %>
+    <form action="/login" method="post" class="auth-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="username">TÊN ĐĂNG NHẬP</label>
+      <input id="username" name="username" autocomplete="username" maxlength="50" required autofocus placeholder="Tên của bạn">
+      <label for="password">MẬT KHẨU</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Nhập mật khẩu">
+      <button class="button" type="submit">Vào không gian của mình ↗</button>
+    </form>
+    <p class="auth-hint">Dùng một trình duyệt khác hoặc cửa sổ ẩn danh để đăng nhập tài khoản của người ấy cùng lúc.</p>
+    <p class="auth-switch">Chưa có tài khoản? <a href="/register">Tạo tài khoản ngay →</a></p>
+  </div></div>
+</div></body></html>

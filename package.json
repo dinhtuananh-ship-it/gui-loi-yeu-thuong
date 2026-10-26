@@ -1,10 +1,12 @@
 {
   "name": "gui-loi-yeu-thuong",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Private questions and memories for couples",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "setup": "node scripts/setup.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +14,11 @@
   "type": "commonjs",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^18.0.9",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "mysql2": "^3.22.4"
+    "pg": "^8.23.1"
   }
 }

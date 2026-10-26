@@ -1,45 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
-
-<title>Sửa câu hỏi</title>
-
-<link rel="stylesheet"
-href="/css/admin.css">
-
-</head>
-
-<body>
-
-<div class="form-card">
-
-<h1>
-✏️ Sửa câu hỏi
-</h1>
-
-<form method="POST">
-
-<textarea
-name="question"
-required
-><%= question.question %></textarea>
-
-<input
-type="number"
-name="order_no"
-value="<%= question.order_no %>"
-required
->
-
-<button>
-Cập nhật
-</button>
-
-</form>
-
-</div>
-
-</body>
-</html>
+<%- include('../partials/head', { title: 'Chỉnh sửa câu hỏi' }) %>
+<div class="admin-wrap">
+  <a class="text-link" href="/admin">← Trở về danh sách</a>
+  <div class="eyebrow spaced">✳ &nbsp; GỢI MỞ MỘT CUỘC TRÒ CHUYỆN</div>
+  <h1>Viết lại <em>một chút.</em></h1>
+  <p class="lead">Nội dung thay đổi sẽ hiển thị ngay cho các phòng. Những câu trả lời đã được mở khóa vẫn được giữ nguyên.</p>
+  <% if (error) { %><div class="alert" role="alert"><%= error %></div><% } %>
+  <div class="editor-card question-editor">
+    <form action="/admin/edit/<%= question.id %>" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="question">NỘI DUNG CÂU HỎI</label>
+      <textarea id="question" name="question" maxlength="1000" required><%= question.question %></textarea>
+      <div class="editor-foot"><span>✦ Câu hỏi #<%= question.id %></span><button class="button" type="submit">Lưu thay đổi ↗</button></div>
+    </form>
+  </div>
+</div></body></html>
