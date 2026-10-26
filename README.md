@@ -13,7 +13,7 @@ Trang chủ hiển thị câu hỏi ở trên và hai ô tương ứng với hai
 
 Hai tab trong cùng một trình duyệt dùng chung phiên đăng nhập. Để thử hai tài khoản cùng lúc, hãy dùng hai trình duyệt khác nhau hoặc một cửa sổ ẩn danh.
 
-Nếu iPhone hiện "Phiên đăng nhập đã hết hạn", hãy mở lại `/login` trong Safari và thử lại; ứng dụng sẽ trả về form thay vì trang lỗi trắng. Nếu vẫn lặp lại, kiểm tra Safari có cho phép cookie và tránh mở website trong trình duyệt nhúng của ứng dụng khác. Sau khi cập nhật bản triển khai trên Render, kiểm tra `/install.html` hiển thị hướng dẫn cài đặt (không phải trang đăng nhập) để chắc chắn code mới đã được deploy.
+Form đăng nhập/đăng ký dùng token có chữ ký và có hạn 30 phút, không cần cookie ẩn danh trước lần đăng nhập đầu tiên; các thao tác sau đăng nhập vẫn yêu cầu session và CSRF riêng. Nếu iPhone hiện "Biểu mẫu đã hết hạn", mở lại `/login` trong Safari rồi thử lại. Nếu đăng nhập thành công nhưng vẫn quay lại `/login`, kiểm tra Safari có cho phép cookie và tránh trình duyệt nhúng của ứng dụng khác. Sau khi cập nhật Render, kiểm tra `/install.html` hiển thị hướng dẫn cài đặt (không phải trang đăng nhập) để chắc chắn code mới đã được deploy.
 
 Trước khi cả hai hoàn thành, bạn xem và sửa được câu trả lời của chính mình; sau đó nội dung được khóa. Mỗi câu trả lời đầu tiên nhận 100 xu cho ví chung của phòng, sửa không nhận thêm. Trong mục **Thú cưng**, hai bạn chọn một bé (chó, mèo, hamster hoặc sóc), mua quần áo bằng xu và cùng thay đồ cho bé.
 

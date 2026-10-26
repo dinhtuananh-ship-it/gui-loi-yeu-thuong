@@ -5,6 +5,7 @@ const PgSession = require("connect-pg-simple")(session);
 const crypto = require("crypto");
 const path = require("path");
 const db = require("./config/db");
+const { createToken, verifyToken } = require("./middleware/form-token");
 
 if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
     throw new Error("SESSION_SECRET must be at least 32 characters. See .env.example.");
@@ -31,9 +32,10 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+    const publicForm = req.path === "/login" || req.path === "/register";
     const newToken = !req.session.csrfToken;
     if (newToken) req.session.csrfToken = crypto.randomBytes(32).toString("hex");
-    res.locals.csrfToken = req.session.csrfToken;
+    res.locals.csrfToken = publicForm ? createToken() : req.session.csrfToken;
     res.locals.user = req.session.user || null;
     res.locals.error = req.session.flashError || null;
     delete req.session.flashError;
@@ -43,16 +45,15 @@ app.use((req, res, next) => {
         return next();
     }
     const token = req.body._csrf;
-    if (typeof token !== "string" || !/^[a-f0-9]{64}$/.test(token) ||
-        !crypto.timingSafeEqual(Buffer.from(token), Buffer.from(req.session.csrfToken))) {
-        if (req.path === "/login" || req.path === "/register") {
-            return req.session.save(err => {
-                if (err) return next(err);
-                res.status(403).render(req.path.slice(1), {
-                    error: "Phiên đăng nhập đã hết hạn. Vui lòng nhập lại thông tin và thử lần nữa."
-                });
+    if (publicForm) {
+        const origin = req.get("origin");
+        if (req.get("sec-fetch-site") === "cross-site" || (origin && origin !== `${req.protocol}://${req.get("host")}`) || !verifyToken(token)) {
+            return res.status(403).render(req.path.slice(1), {
+                error: "Biểu mẫu đã hết hạn. Vui lòng nhập lại thông tin và thử lần nữa."
             });
         }
+    } else if (typeof token !== "string" || !/^[a-f0-9]{64}$/.test(token) ||
+        !crypto.timingSafeEqual(Buffer.from(token), Buffer.from(req.session.csrfToken))) {
         return res.status(403).send("Phiên biểu mẫu đã hết hạn. Vui lòng tải lại trang và thử lại.");
     }
     next();
